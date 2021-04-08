@@ -8,8 +8,9 @@ pipeline {
                 }
             }
             steps {
-                sh 'echo hola mundo!'
-
+                sh 'app/manage.py db init'
+                sh 'manage.py db migrate'
+                sh 'manage.py db upgrade'
             }
         }
     }
