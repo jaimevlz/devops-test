@@ -1,17 +1,17 @@
 pipeline {
-    agent none
+    agent { docker { image 'python:3.7.2' } }
     stages {
-        stage('Build') {
-            agent {
-                docker {
-                    image 'python:2-alpine'
-                }
-            }
+        stage('build') {
             steps {
-                sh 'app/manage.py db init'
-                sh 'app/manage.py db migrate'
-                sh 'app/manage.py db upgrade'
-                sh 'app/app.py'
+                sh 'pip install flask'sh
+                sh 'manage.py db init'
+                sh 'manage.py db migrate'
+                sh 'manage.py db upgrade'
+            }
+        }
+        stage('test') {
+            steps {
+                sh 'echo hello world!'
             }
         }
     }
