@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sh 'pip install flask'sh
+                sh 'pip install flask'
                 sh 'manage.py db init'
                 sh 'manage.py db migrate'
                 sh 'manage.py db upgrade'
