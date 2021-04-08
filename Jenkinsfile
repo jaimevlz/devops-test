@@ -4,9 +4,9 @@ pipeline {
         stage('build') {
             steps {
                 sh 'pip install flask'
-                sh 'manage.py db init'
-                sh 'manage.py db migrate'
-                sh 'manage.py db upgrade'
+                sh 'app/manage.py db init'
+                sh 'app/manage.py db migrate'
+                sh 'app/manage.py db upgrade'
             }
         }
         stage('test') {
