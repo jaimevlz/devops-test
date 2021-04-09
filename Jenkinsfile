@@ -22,5 +22,13 @@ pipeline {
         }
       }
     }
+    stage('deploy') {
+      steps {
+        sh 'echo $HOME'
+        withEnv(["HOME=${env.WORKSPACE}"]) {
+          sh 'python app.py'
+        }
+      }
+    }
   }
 }
