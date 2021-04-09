@@ -1,7 +1,7 @@
 pipeline {
   agent { docker { image 'python:3.7.2' } }
   stages {
-    stage('build') {
+    stage('Build') {
       steps {
         sh 'echo $HOME'
         withEnv(["HOME=${env.WORKSPACE}"]) {
@@ -9,7 +9,7 @@ pipeline {
         }
       }
     }
-    stage('test') {
+    stage('Test') {
       steps {
         sh 'echo $HOME'
         withEnv(["HOME=${env.WORKSPACE}"]) {
@@ -22,11 +22,21 @@ pipeline {
         }
       }
     }
-    stage('deploy') {
+    stage('Deliver') {
+      agent any
+      environment {
+        VOLUME = '$(pwd)/sources:/src'
+        IMAGE = 'python:3.7.2'
+      }
       steps {
-        sh 'echo $HOME'
-        withEnv(["HOME=${env.WORKSPACE}"]) {
-          sh 'python app.py'
+        dir(path: env.BUILD_ID) {
+          unstash(name: 'compiled-results')
+          sh "docker run --rm -v ${VOLUME} ${IMAGE} 'pyinstaller -F app.py'"
+        }
+      }
+      post {
+        success {
+          sh "docker run --rm -v ${VOLUME} ${IMAGE} 'rm -rf build dist'"
         }
       }
     }
