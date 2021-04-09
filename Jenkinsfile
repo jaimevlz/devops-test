@@ -6,12 +6,8 @@ pipeline {
         sh 'echo $HOME'
         withEnv(["HOME=${env.WORKSPACE}"]) {
           sh 'pip install --user -r requirements.txt'
+          sh 'python test.py'
         }
-      }
-    }
-    stage('test') {
-      steps {
-        sh 'python test.py'
       }
     }
   }
