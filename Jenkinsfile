@@ -5,8 +5,6 @@ pipeline {
       steps {
         sh 'echo $HOME'
         withEnv(["HOME=${env.WORKSPACE}"]) {
-          sh 'virtualenv "HOME=${env.WORKSPACE}"'
-          sh 'soruce virtualenv env/bin/activate'
           sh 'pip install --user -r requirements.txt'
         }
       }
