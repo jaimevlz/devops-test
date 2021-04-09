@@ -23,20 +23,10 @@ pipeline {
       }
     }
     stage('Deliver') {
-      agent any
-      environment {
-        VOLUME = '$(pwd)/sources:/src'
-        IMAGE = 'python:3.7.2'
-      }
-      steps {
-        dir(path: env.BUILD_ID) {
-          unstash(name: 'compiled-results')
-          sh "docker run --rm -v ${VOLUME} ${IMAGE} 'pyinstaller -F app.py'"
-        }
-      }
-      post {
-        success {
-          sh "docker run --rm -v ${VOLUME} ${IMAGE} 'rm -rf build dist'"
+      steps{
+        sh 'echo $HOME'
+        withEnv(["HOME=${env.WORKSPACE}"]) {
+          sh 'python test.py'
         }
       }
     }

@@ -25,4 +25,9 @@ class TestHello(unittest.TestCase):
         self.assertIn(bytearray(f"{name}", 'utf-8'), rv.data)
 
 if __name__ == '__main__':
+    ############# Add these lines #############
+    import xmlrunner
+    runner = xmlrunner.XMLTestRunner(output='test-reports')
+    unittest.main(testRunner=runner)
+    ###########################################
     unittest.main()

@@ -1,7 +1,7 @@
 pipeline {
   agent { docker { image 'python:3.7.2' } }
   stages {
-    stage('build') {
+    stage('Build') {
       steps {
         sh 'echo $HOME'
         withEnv(["HOME=${env.WORKSPACE}"]) {
@@ -9,8 +9,21 @@ pipeline {
         }
       }
     }
-    stage('test') {
+    stage('Test') {
       steps {
+        sh 'echo $HOME'
+        withEnv(["HOME=${env.WORKSPACE}"]) {
+          sh 'python test.py'
+        }
+      }
+      post {
+        always {
+          junit 'test-reports/*.xml'
+        }
+      }
+    }
+    stage('Deliver') {
+      steps{
         sh 'echo $HOME'
         withEnv(["HOME=${env.WORKSPACE}"]) {
           sh 'python test.py'
