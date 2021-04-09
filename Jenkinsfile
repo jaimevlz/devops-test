@@ -1,9 +1,11 @@
 pipeline {
-  agent { docker { image 'python:3.7.2'} }
+  agent { docker { image 'python:3-Alpine'} }
   stages {
     stage('build') {
       steps {
-        sh 'virtualenv venv && . venv/bin/activate && pip install -r requirements.txt && python tests.py'
+      withEnv(["HOME=${env.WORKSPACE}"]) {
+                 sh 'pip install --user -r requirements.txt'
+             }
       }
     }
     stage('test') {
