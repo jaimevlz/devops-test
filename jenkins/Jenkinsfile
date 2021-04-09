@@ -1,11 +1,9 @@
 pipeline {
-  agent { docker { image 'python:3.7.2' } }
+  agent { docker { image 'python:3.7.2', args:'-u root:root' } }
   stages {
     stage('build') {
       steps {
-        withEnv(["HOME=${env.WORKSPACE}"]) {
                   sh 'pip install -r requirements.txt''
-              }
       }
     }
     stage('test') {
