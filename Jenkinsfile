@@ -22,13 +22,5 @@ pipeline {
         }
       }
     }
-    stage('Deliver') {
-      steps{
-        sh 'echo $HOME'
-        withEnv(["HOME=${env.WORKSPACE}"]) {
-          sh 'python test.py'
-        }
-      }
-    }
   }
 }
