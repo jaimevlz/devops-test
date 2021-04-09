@@ -26,5 +26,3 @@ class TestHello(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-TEST_CASES
-chmod +x test.py
