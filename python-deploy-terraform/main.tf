@@ -9,7 +9,7 @@ variable "ingressrules" {
 }
 
 resource "aws_security_group" "web_traffic" {
-  name        = "Allow web traffic"
+  name        = "Allow web traffic Python App"
   description = "Allow ssh and standard http/https ports inbound and everything outbound"
 
   dynamic "ingress" {
@@ -64,9 +64,15 @@ resource "aws_instance" "pythonApp" {
       "sudo curl -fsSL https://get.docker.com -o get-docker.sh",
       "sudo sh get-docker.sh",
       "sudo docker --version",
-      "sudo cd devops-test/python-deploy/terraform/",
-      "sudo docker build -t pythonApp",
-      "sudo docker run -d -p 5000:5000 pythonApp",    
+      "sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080",
+      "sudo sh -c \"iptables-save > /etc/iptables.rules\"",
+      "echo iptables-persistent iptables-persistent/autosave_v4 boolean true | sudo debconf-set-selections",
+      "echo iptables-persistent iptables-persistent/autosave_v6 boolean true | sudo debconf-set-selections",
+      "sudo apt-get -y install iptables-persistent",
+      "sudo ufw allow 8080",
+      "cd devops-test/python-deploy-terraform/",
+      "sudo docker build .",
+      "sudo docker run -d -p 5000:5000",
     ]
   }
 

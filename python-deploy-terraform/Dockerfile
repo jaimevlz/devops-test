@@ -1,12 +1,13 @@
 FROM ubuntu:20.04
 
-MAINTANER Your Name "youremail@domain.tld"
-
-RUN apt-get update -y && \
-    apt-get install -y python-pip python-dev
+RUN apt-get update -y
+RUN apt-get install software-properties-common
+RUN apt-add-repository universe
+RUN apt-get update
+RUN apt-get install python-pip
 
 # We copy just the requirements.txt first to leverage Docker cache
-COPY ./requirements.txt /app/requirements.txt
+COPY requirements.txt /app/requirements.txt
 
 WORKDIR /app
 
