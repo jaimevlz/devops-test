@@ -74,16 +74,16 @@ resource "aws_instance" "pythonApp" {
       "sudo -u postgres createuser --superuser ubuntu",
       "sudo -u ubuntu createdb books_store",
       "sudo apt-get -y install python3-pip build-essential python3-dev",
-      "pip install virtualenv",
+      "pip3 install virtualenv",
       "virtualenv env",
       "source env/bin/activate",
       "export APP_SETTINGS='config.DevelopmentConfig'",
       "export DATABASE_URL='postgresql:///books_store'",
-      "pip install -r requirements.txt",
-      "python manage.py db init",
-      "python manage.py db migrate",
-      "python manage.py db upgrade",
-      "python manage.py runserver",
+      "pip3 install -r requirements.txt",
+      "python3 manage.py db init",
+      "python3 manage.py db migrate",
+      "python3 manage.py db upgrade",
+      "python3 manage.py runserver",
     ]
   }
 
