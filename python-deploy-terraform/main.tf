@@ -71,8 +71,6 @@ resource "aws_instance" "pythonApp" {
       "sudo apt-get -y install iptables-persistent",
       "sudo ufw allow 8080",
       "cd devops-test/python-deploy-terraform/",
-      "sudo docker build .",
-      "sudo docker run -d -p 5000:5000",
     ]
   }
 
