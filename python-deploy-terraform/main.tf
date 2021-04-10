@@ -81,7 +81,7 @@ resource "aws_instance" "pythonApp" {
       "source env/bin/activate",
       "export APP_SETTINGS=\"config.DevelopmentConfig\"",
       "export DATABASE_URL=\"postgresql:///books_store\"",
-      "pip install -r requirements.txt",
+      "pip3 install -r requirements.txt",
       "python3 manage.py db init",
       "python3 manage.py db migrate",
       "python3 manage.py db upgrade",
