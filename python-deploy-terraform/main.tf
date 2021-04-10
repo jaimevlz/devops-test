@@ -66,7 +66,7 @@ resource "aws_instance" "pythonApp" {
       "echo iptables-persistent iptables-persistent/autosave_v4 boolean true | sudo debconf-set-selections",
       "echo iptables-persistent iptables-persistent/autosave_v6 boolean true | sudo debconf-set-selections",
       "sudo apt-get -y install iptables-persistent",
-      "sudo ufw allow 5000",
+      "sudo ufw allow 8080",
       "cd devops-test/python-deploy-terraform/",
       "wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -",
       "sudo apt-get update",
