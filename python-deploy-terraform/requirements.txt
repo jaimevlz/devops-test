@@ -1,1 +1,6 @@
 Flask
+flask_script
+flask_sqlalchemy
+flask_migrate
+gunicorn
+psycopg2-binary
