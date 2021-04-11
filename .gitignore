@@ -3,3 +3,4 @@
 *.hcl
 *.exe
 *.tfstate
+*.info
