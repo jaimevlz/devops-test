@@ -61,12 +61,6 @@ resource "aws_instance" "pythonApp" {
     inline = [
       "sudo apt-get update",
       "sudo git clone https://github.com/jaimevlz/devops-test.git",
-      "sudo iptables -t nat -A PREROUTING -p tcp --dport 5000 -j REDIRECT --to-port 8080",
-      "sudo sh -c \"iptables-save > /etc/iptables.rules\"",
-      "echo iptables-persistent iptables-persistent/autosave_v4 boolean true | sudo debconf-set-selections",
-      "echo iptables-persistent iptables-persistent/autosave_v6 boolean true | sudo debconf-set-selections",
-      "sudo apt-get -y install iptables-persistent",
-      "sudo ufw allow 8080",
       "sudo cp -r devops-test/python-deploy-terraform/ /home/ubuntu",
       "wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -",
       "sudo apt-get update",
@@ -85,7 +79,7 @@ resource "aws_instance" "pythonApp" {
       "python3 manage.py db init",
       "python3 manage.py db migrate",
       "python3 manage.py db upgrade",
-      "python3 manage.py runserver",
+      "gunicorn --bind 0.0.0.0:5000 run:app",
     ]
   }
 
