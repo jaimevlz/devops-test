@@ -81,3 +81,5 @@ gunicorn --bind 0.0.0.0:5000 app:app
 ```
 ## Conclusion
 The test was too interesting because tested the my skills to learn, research and apply a new tool. Also the test was difficult beacause every single part of the architecture works separatly but when I tried to do a one click deployment nothing works.I learn how to create a basic pipeline and run the pipeline with a push or commit new in the github repository. I learn how to deploy a server on AWS EC2 service using a tool of infraestructure as a code like terraform. And also learn about Flask App integration with a Database.
+Jenkins Link to Access: http://54.185.237.254
+
