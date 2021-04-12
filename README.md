@@ -40,6 +40,8 @@ Also it's necessary create a Jenkinsfile and setup the Pipeline and the connecti
 
 ![Jenkinsfile](https://i.imgur.com/Gtufc5T.png)
 
+Jenkins Link to Access: http://54.185.237.254
+
 ## 3. GitHub
 After configuring Jenkins, it's time to configure GitHub so that when the code is updated by a developer Jenkins run the pipeline and deploy the updates using Spinnaker pipelines and pipelines triggers.
 
