@@ -5,12 +5,12 @@ provider "aws" {
 
 variable "ingressrules" {
   type    = list(number)
-  default = [80, 443, 22]
+  default = [80, 443, 22, 5000]
 }
 
 resource "aws_security_group" "web_traffic" {
-  name        = "Allow web traffic Python App"
-  description = "Allow ssh and standard http/https ports inbound and everything outbound"
+  name        = "Allow web traffic Python App 1"
+  description = "Allow Ports"
 
   dynamic "ingress" {
     iterator = port
@@ -51,7 +51,7 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"]
 }
 
-resource "aws_instance" "pythonApp" {
+resource "aws_instance" "pythonApp_1" {
   ami             = data.aws_ami.ubuntu.id
   instance_type   = "t2.micro"
   security_groups = [aws_security_group.web_traffic.name]
@@ -60,31 +60,13 @@ resource "aws_instance" "pythonApp" {
   provisioner "remote-exec" {
     inline = [
       "sudo apt-get update",
-      "sudo git clone https://github.com/jaimevlz/devops-test.git",
       "echo iptables-persistent iptables-persistent/autosave_v4 boolean true | sudo debconf-set-selections",
       "echo iptables-persistent iptables-persistent/autosave_v6 boolean true | sudo debconf-set-selections",
       "sudo apt-get -y install iptables-persistent",
       "sudo ufw allow 5000",
-      "sudo cp -r devops-test/python-deploy-terraform/ /home/ubuntu",
-      "wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -",
-      "sudo apt-get update",
-      "sudo apt-get -y install postgresql postgresql-contrib",
-      "sudo -u postgres createuser --superuser ubuntu",
-      "sudo -u ubuntu createdb addi_db",
       "sudo apt-get install software-properties-common",
       "sudo apt-get -y install python3-pip build-essential python3-dev",
-      "pip3 install virtualenv",
-      "cd python-deploy-terraform/",
-      "virtualenv env",
-      "source env/bin/activate",
-      "export APP_SETTINGS="config.DevelopmentConfig",
-      "export DATABASE_URL="postgresql:///addi_db",
-      "pip3 install -r requirements.txt",
-      "python3 manage.py db init",
-      "python3 manage.py db migrate",
-      "python3 manage.py db upgrade",
-      "gunicorn --bind 0.0.0.0:5000 app:app",
-    ]
+      ]
   }
 
   connection {
@@ -95,7 +77,7 @@ resource "aws_instance" "pythonApp" {
   }
 
   tags = {
-    "Name"      = "pythonApp"
+    "Name"      = "pythonApp_1"
     "Terraform" = "true"
   }
 }
